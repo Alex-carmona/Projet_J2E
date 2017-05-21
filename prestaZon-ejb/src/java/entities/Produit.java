@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -57,12 +58,17 @@ public class Produit implements Serializable {
     private Integer stock;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproduit")
     private Collection<Lignecmd> lignecmdCollection;
-
+    private ArrayList<Produit> produits;
+    
     public Produit() {
     }
 
-    public Produit(Integer idproduit) {
+    public Produit(Integer idproduit, String libelle, String descriptif, double prixunitaire, Integer stock) {
         this.idproduit = idproduit;
+        this.libelle = libelle;
+        this.descriptif = descriptif;
+        this.prixunitaire = prixunitaire;
+        this.stock = stock;
     }
 
     public Integer getIdproduit() {
@@ -105,6 +111,15 @@ public class Produit implements Serializable {
         this.stock = stock;
     }
 
+    public void addProduit(){
+        Produit newP = new Produit();
+        produits.add(newP);
+    }
+    
+    public void deleteProduit(Integer idproduit){
+        produits.remove(idproduit);
+    }
+    
     @XmlTransient
     public Collection<Lignecmd> getLignecmdCollection() {
         return lignecmdCollection;
